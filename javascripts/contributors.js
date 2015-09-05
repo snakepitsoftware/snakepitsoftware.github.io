@@ -24,5 +24,5 @@
 //
 
 $(function() {
-  $("#opensource-repos").loadRepositories("QtMark", 2);
+  $("#repo-contributors").loadContributors("QtMark", 2);
 });

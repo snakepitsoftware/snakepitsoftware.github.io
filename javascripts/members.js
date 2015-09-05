@@ -24,5 +24,5 @@
 //
 
 $(function() {
-  $("#organization-members").loadMembers("snakepitsoftware");
+  $("#organization-members").loadMembers("QtMark");
 });
