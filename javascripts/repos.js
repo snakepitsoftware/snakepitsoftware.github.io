@@ -24,5 +24,5 @@
 //
 
 $(function() {
-  $("#opensource-repos").loadRepositories("QtMark", 2);
+  $("#opensource-repos").loadRepositories("snakepitsoftware", 2);
 });

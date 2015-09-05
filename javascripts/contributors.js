@@ -24,5 +24,5 @@
 //
 
 $(function() {
-  $("#repo-contributors").loadContributors("QtMark", 2);
+  $("#repo-contributors").loadContributors("snakepitsoftware", 2);
 });
