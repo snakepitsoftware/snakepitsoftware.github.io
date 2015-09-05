@@ -118,7 +118,7 @@ jQuery.fn.loadRepositories = function(user, type) {
         }
 
         if (repo.has_downloads) {
-          term.append(', <a href="https://github.com/QtMark/qmjson/archive/master.zip">Download Zip Archive</a>');
+          term.append(', <a href="https://github.com/QtMark/qmjson/archive/master.zip">Download Zip</a>');
         }
       }
     });
