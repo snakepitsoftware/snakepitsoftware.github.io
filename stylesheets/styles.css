@@ -91,6 +91,10 @@ dt {
   font-weight:700;
 }
 
+/*dt#snakepitsoftware\.github\.io.repo, dd#snakepitsoftware\.github\.io.repo {
+  display: none;
+}*/
+
 dd {
   margin: 0; padding: 0 0 0.5em 25px;
 }

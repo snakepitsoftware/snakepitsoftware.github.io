@@ -24,5 +24,13 @@
 //
 
 $(function() {
-  $("#organization-members").loadMembers("snakepitsoftware");
+  var organization = $('#members_script').attr("organization");
+
+  // For some browsers, `attr` is undefined; for others,
+  // `attr` is false.  Check for both.
+  if (typeof organization !== typeof undefined && organization !== false) {
+    $("#organization-members").loadMembers(organization);
+  } else {
+    $("#organization-members").html("<span>Need to specify an organization.</span>");
+  }
 });

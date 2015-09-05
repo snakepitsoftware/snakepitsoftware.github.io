@@ -24,5 +24,18 @@
 //
 
 $(function() {
-  $("#repo-collaborators").loadCollaborators("snakepitsoftware", 2);
+  var user = $('#collaborators_script').attr("user");
+
+  // For some browsers, `attr` is undefined; for others,
+  // `attr` is false.  Check for both.
+  if (typeof user !== typeof undefined && user !== false) {
+    $("#repo-collaborators").loadCollaborators(user, 1);
+  } else {
+    user = $('#collaborators_script').attr("organization");
+    if (typeof user !== typeof undefined && user !== false) {
+      $("#repo-collaborators").loadCollaborators(user, 2);
+    } else {
+      $("#repo-collaborators").html("<span>Need to specify either a user or an organization.</span>");
+    }
+  }
 });

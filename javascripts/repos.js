@@ -24,5 +24,18 @@
 //
 
 $(function() {
-  $("#opensource-repos").loadRepositories("snakepitsoftware", 2);
+  var user = $('#repos_script').attr("user");
+
+  // For some browsers, `attr` is undefined; for others,
+  // `attr` is false.  Check for both.
+  if (typeof user !== typeof undefined && user !== false) {
+    $("#opensource-repos").loadRepositories(user, 1);
+  } else {
+    user = $('#repos_script').attr("organization");
+    if (typeof user !== typeof undefined && user !== false) {
+      $("#opensource-repos").loadRepositories(user, 2);
+    } else {
+      $("#opensource-repos").html("<span>Need to specify either a user or an organization.</span>");
+    }
+  }
 });

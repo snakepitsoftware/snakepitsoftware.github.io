@@ -80,7 +80,7 @@ jQuery.githubBranches = function(user, repo, callback) {
  * These do the bulk of the work.
  */
 
-jQuery.fn.loadRepositories = function(user, type) {
+jQuery.fn.loadRepositories = function(user, type, filter) {
   var target = this;
 
   target.html("<span>Querying GitHub for " + user +"'s repositories ...</span>");
@@ -90,36 +90,35 @@ jQuery.fn.loadRepositories = function(user, type) {
     var list = $('<dl />');
 
     sortByNumberOfWatchers(repos);
+
     target.empty().append(list);
 
     $(repos).each(function() {
       var repo = this;
 
-      if (repo.name !== "QtMark.github.io") {
-        var term = $('<dt />');
-        var definition = $('<dd />');
+      var term = $('<dt id="' + repo.name + '" class="repo" />');
+      var definition = $('<dd id="' + repo.name + '" class="repo" />');
 
-        list.append(term);
-        list.append(definition);
+      list.append(term);
+      list.append(definition);
 
-        term.append(repo.name + ' - <a href="' + repo.html_url +'">Repository</a>');
-        definition.append(repo.description);
+      term.append(repo.name + ' - <a href="' + repo.html_url +'">Repository</a>');
+      definition.append(repo.description);
 
-        if (repo.has_wiki) {
-          term.append(', <a href="https://github.com/' + user + '/' + repo.name + '/wiki">Wiki</a>');
-        }
+      if (repo.has_wiki) {
+        term.append(', <a href="https://github.com/' + user + '/' + repo.name + '/wiki">Wiki</a>');
+      }
 
-        if (repo.has_issues) {
-          term.append(', <a href="https://github.com/' + user + '/' + repo.name + '/issues">Issue Tracker</a>');
-        }
+      if (repo.has_issues) {
+        term.append(', <a href="https://github.com/' + user + '/' + repo.name + '/issues">Issue Tracker</a>');
+      }
 
-        if (repo.has_pages) {
-          term.append(', <a href="https://' + user + '.github.io/' + repo.name + '/doc/html">Documentation</a>');
-        }
+      if (repo.has_pages) {
+        term.append(', <a href="https://' + user + '.github.io/' + repo.name + '/doc/html">Documentation</a>');
+      }
 
-        if (repo.has_downloads) {
-          term.append(', <a href="https://github.com/QtMark/qmjson/archive/master.zip">Download Zip</a>');
-        }
+      if (repo.has_downloads) {
+        term.append(', <a href="https://github.com/' + user + '/' + repo.name + '/archive/master.zip">Download Zip</a>');
       }
     });
   });
@@ -173,6 +172,8 @@ jQuery.fn.loadContributors = function(user, type) {
     var repos = data;
     var list = $('<ul />');
 
+    sortByNumberOfWatchers(repos);
+
     target.empty().append(list);
 
     $(repos).each(function() {
@@ -180,6 +181,8 @@ jQuery.fn.loadContributors = function(user, type) {
 
       $.githubContributors(user, repo.name, function(data) {
         var contributors = data;
+
+        sortByNumberOfContributions(contributors);
 
         $(contributors).each(function() {
           var contributor = this;
