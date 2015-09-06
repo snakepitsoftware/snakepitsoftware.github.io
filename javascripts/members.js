@@ -24,13 +24,19 @@
 //
 
 $(function() {
-  var organization = $('#members_script').attr("organization");
+  // I'd still like to find a way to automate this.
+  var script = $('#members_script');
+  var div    = $('#organization-members');
 
-  // For some browsers, `attr` is undefined; for others,
-  // `attr` is false.  Check for both.
-  if (typeof organization !== typeof undefined && organization !== false) {
-    $("#organization-members").loadMembers(organization);
+  var organization = script.attr('organization');
+
+  // For some browsers, a missing attribute is undefined;
+  // for others, the attribute is false.  Check for both.
+  // But for this situation, I know the type will be string if valid.
+
+  if (typeof organization === typeof "") {
+    div.loadMembers(organization);
   } else {
-    $("#organization-members").html("<span>Need to specify an organization.</span>");
+    div.html("<span>Need to specify an organization.</span>");
   }
 });

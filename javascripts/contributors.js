@@ -24,18 +24,22 @@
 //
 
 $(function() {
-  var user = $('#contributors_script').attr("user");
+  // I'd still like to find a way to automate this.
+  var script = $('#contributors_script');
+  var div    = $('#repo-contributors');
 
-  // For some browsers, `attr` is undefined; for others,
-  // `attr` is false.  Check for both.
-  if (typeof user !== typeof undefined && user !== false) {
-    $("#repo-contributors").loadContributors(user, 1);
+  var user         = script.attr('user');
+  var organization = script.attr('organization');
+
+  // For some browsers, a missing attribute is undefined;
+  // for others, the attribute is false.  Check for both.
+  // But for this situation, I know the type will be string if valid.
+
+  if (typeof user === typeof "") {
+    div.loadContributors(user, 1);
+  } else if (typeof organization === typeof "") {
+    div.loadContributors(organization, 2);
   } else {
-    user = $('#contributors_script').attr("organization");
-    if (typeof user !== typeof undefined && user !== false) {
-      $("#repo-contributors").loadContributors(user, 2);
-    } else {
-      $("#repo-contributors").html("<span>Need to specify either a user or an organization.</span>");
-    }
+    div.html("<span>Need to specify either a user or an organization.</span>");
   }
 });

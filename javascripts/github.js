@@ -140,7 +140,7 @@ jQuery.fn.loadMembers = function(organization) {
 
       $.githubUser(member.login, function(data) {
         var user = data;
-        var item = $( '<li style="clear:both" id="' + user.name + '" class="member" />' );
+        var item = $('<li style="clear:both" id="' + user.name + '" class="member" />');
 
         list.append(item);
 
@@ -148,14 +148,12 @@ jQuery.fn.loadMembers = function(organization) {
         item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
         if ((null != user.company) || (null != user.blog)) {
           item.append(' (');
-        }
-        if (null != user.company) {
-          item.append(user.company);
-        }
-        if (null != user.blog) {
-          item.append(', <a href="' + user.blog + '">website</a>');
-        }
-        if ((null != user.company) || (null != user.blog)) {
+          if (null != user.company) {
+            item.append(user.company);
+          }
+          if (null != user.blog) {
+            item.append(', <a href="' + user.blog + '">blog</a>');
+          }
           item.append(')');
         }
       });
@@ -200,14 +198,12 @@ jQuery.fn.loadContributors = function(user, type) {
               item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
               if ((null != user.company) || (null != user.blog)) {
                 item.append(' (');
-              }
-              if (null != user.company) {
-                item.append(user.company);
-              }
-              if (null != user.blog) {
-                item.append(', <a href="' + user.blog + '">website</a>');
-              }
-              if ((null != user.company) || (null != user.blog)) {
+                if (null != user.company) {
+                  item.append(user.company);
+                }
+                if (null != user.blog) {
+                  item.append(', <a href="' + user.blog + '">blog</a>');
+                }
                 item.append(')');
               }
               item.append(' - <a href="' + repo.html_url + '">' + repo.name + '</a> [' + contributor.contributions + ']');
@@ -241,10 +237,10 @@ jQuery.fn.loadCollaborators = function(user, type) {
 
           $.githubUser(collaborator.login, function(data) {
             var user = data;
-            var item = $( '<li style="clear:both" id="' + user.name + '" class="collaborator" />' );
+            var item = $('<li style="clear:both" id="' + user.name + '" class="collaborator" />');
 
-            if ($( 'li#' + user.name + '.collaborator' ).length > 0) {
-              $( 'li#' + user.name + '.collaborator' ).append(', <a href="' + repo.html_url + '">' + repo.name + '</a>');
+            if ($('li#' + user.name + '.collaborator').length > 0) {
+              $('li#' + user.name + '.collaborator').append(', <a href="' + repo.html_url + '">' + repo.name + '</a>');
             } else {
               list.append(item);
   
@@ -252,14 +248,12 @@ jQuery.fn.loadCollaborators = function(user, type) {
               item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
               if ((null != user.company) || (null != user.blog)) {
                 item.append(' (');
-              }
-              if (null != user.company) {
-                item.append(user.company);
-              }
-              if (null != user.blog) {
-                item.append(', <a href="' + user.blog + '">website</a>');
-              }
-              if ((null != user.company) || (null != user.blog)) {
+                if (null != user.company) {
+                  item.append(user.company);
+                }
+                if (null != user.blog) {
+                  item.append(', <a href="' + user.blog + '">blog</a>');
+                }
                 item.append(')');
               }
               item.append(' - <a href="' + repo.html_url + '">' + repo.name + '</a>');
