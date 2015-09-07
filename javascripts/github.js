@@ -87,38 +87,35 @@ jQuery.fn.loadRepositories = function(user, type, filter) {
 
   $.githubRepos(user, type, function(data) {
     var repos = data;
-    var list = $('<dl />');
-
-    sortByNumberOfWatchers(repos);
+    var list = $('<ul class="repos" />');
 
     target.empty().append(list);
 
     $(repos).each(function() {
       var repo = this;
+      var item = $('<li id="' + repo.name + '" class="repo" />');
+      var sublist = $('<ul id="' + repo.name + '" class="repo_properties" />');
 
-      var term = $('<dt id="' + repo.name + '" class="repo" />');
-      var definition = $('<dd id="' + repo.name + '" class="repo" />');
+      list.append(item);
 
-      list.append(term);
-      list.append(definition);
+      item.append('<b>' + repo.name + '</b> - ' + repo.description);
+      item.append(sublist);
 
-      term.append(repo.name + ' - <a href="' + repo.html_url +'">Repository</a>');
-      definition.append(repo.description);
-
+      sublist.append('<li id="' + repo.name + '" class="repository"><a href="' + repo.html_url +'">Repository</a></li>');
       if (repo.has_wiki) {
-        term.append(', <a href="https://github.com/' + user + '/' + repo.name + '/wiki">Wiki</a>');
+        sublist.append('<li id="' + repo.name + '" class="wiki"><a href="https://github.com/' + user + '/' + repo.name + '/wiki">Wiki</a></li>');
       }
 
       if (repo.has_issues) {
-        term.append(', <a href="https://github.com/' + user + '/' + repo.name + '/issues">Issue Tracker</a>');
+        sublist.append('<li id="' + repo.name + '" class="tracker"><a href="https://github.com/' + user + '/' + repo.name + '/issues">Issue Tracker</a></li>');
       }
 
-      if (repo.has_pages) {
-        term.append(', <a href="https://' + user + '.github.io/' + repo.name + '/doc/html">Documentation</a>');
+      if (repo.has_pages && repo.name !== user + '.github.io') {
+        sublist.append('<li id="' + repo.name + '" class="documentation"><a href="https://' + user + '.github.io/' + repo.name + '/doc/html">Documentation</a></li>');
       }
 
       if (repo.has_downloads) {
-        term.append(', <a href="https://github.com/' + user + '/' + repo.name + '/archive/master.zip">Download Zip</a>');
+        sublist.append('<li id="' + repo.name + '" class="download"><a href="https://github.com/' + user + '/' + repo.name + '/archive/master.zip">Download Zip</a></li>');
       }
     });
   });
@@ -131,7 +128,7 @@ jQuery.fn.loadMembers = function(organization) {
 
   $.githubMembers(organization, function(data) {
     var members = data;
-    var list = $('<ul />');
+    var list = $('<ul class="members" />');
 
     target.empty().append(list);
 
@@ -146,15 +143,11 @@ jQuery.fn.loadMembers = function(organization) {
 
         item.append('<img style="float: left; margin: 0px 15px 15px 0px;" src="' + user.avatar_url + '" alt="" height="42" width="42">');
         item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
-        if ((null != user.company) || (null != user.blog)) {
-          item.append(' (');
-          if (null != user.company) {
-            item.append(user.company);
-          }
-          if (null != user.blog) {
-            item.append(', <a href="' + user.blog + '">blog</a>');
-          }
-          item.append(')');
+        if (null != user.company) {
+          item.append(' (' + user.company + ')');
+        }
+        if (null != user.blog) {
+          item.append(' - <a href="' + user.blog + '">blog</a>');
         }
       });
     });
@@ -168,9 +161,7 @@ jQuery.fn.loadContributors = function(user, type) {
 
   $.githubRepos(user, type, function(data) {
     var repos = data;
-    var list = $('<ul />');
-
-    sortByNumberOfWatchers(repos);
+    var list = $('<ul class="contributors" />');
 
     target.empty().append(list);
 
@@ -180,33 +171,29 @@ jQuery.fn.loadContributors = function(user, type) {
       $.githubContributors(user, repo.name, function(data) {
         var contributors = data;
 
-        sortByNumberOfContributions(contributors);
-
         $(contributors).each(function() {
           var contributor = this;
 
           $.githubUser(contributor.login, function(data) {
             var user = data;
-            var item = $( '<li style="clear:both" id="' + user.name + '" class="contributor" />' );
+            var item = $('<li style="clear:both" id="' + user.name + '" class="contributor" />');
 
-            if ($( 'li#' + user.name + '.contributor' ).length > 0) {
-              $( 'li#' + user.name + '.contributor' ).append(', <a href="' + repo.html_url + '">' + repo.name + '</a> [' + contributor.contributions + ']');
+            if ($('ul#' + user.name + '.repos').length > 0) {
+              $('ul#' + user.name + '.repos').append('<li class="repo"><a href="' + repo.html_url + '">' + repo.name + '</a> [' + contributor.contributions + ']</li>');
             } else {
               list.append(item);
-  
+
               item.append('<img style="float: left; margin: 0px 15px 15px 0px;" src="' + user.avatar_url + '" alt="" height="42" width="42">');
               item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
-              if ((null != user.company) || (null != user.blog)) {
-                item.append(' (');
-                if (null != user.company) {
-                  item.append(user.company);
-                }
-                if (null != user.blog) {
-                  item.append(', <a href="' + user.blog + '">blog</a>');
-                }
-                item.append(')');
+              if (null != user.company) {
+                item.append(' (' + user.company + ')');
               }
-              item.append(' - <a href="' + repo.html_url + '">' + repo.name + '</a> [' + contributor.contributions + ']');
+              if (null != user.blog) {
+                item.append(' - <a href="' + user.blog + '">blog</a>');
+              }
+              var sublist = $('<ul id="' + user.name + '" class="repos" />');
+              item.append(sublist);
+              sublist.append('<li id="' + user.name + '" class="repo"><a href="' + repo.html_url + '">' + repo.name + '</a> [' + contributor.contributions + ']</li>');
             }
           });
         });
@@ -222,7 +209,7 @@ jQuery.fn.loadCollaborators = function(user, type) {
 
   $.githubRepos(user, type, function(data) {
     var repos = data;
-    var list = $('<ul />');
+    var list = $('<ul class="collaborators" />');
 
     target.empty().append(list);
 
@@ -239,24 +226,22 @@ jQuery.fn.loadCollaborators = function(user, type) {
             var user = data;
             var item = $('<li style="clear:both" id="' + user.name + '" class="collaborator" />');
 
-            if ($('li#' + user.name + '.collaborator').length > 0) {
-              $('li#' + user.name + '.collaborator').append(', <a href="' + repo.html_url + '">' + repo.name + '</a>');
+            if ($('ul#' + user.name + '.collaborator').length > 0) {
+              $('ul#' + user.name + '.collaborator').append('<li class="collaborator"><a href="' + repo.html_url + '">' + repo.name + '</a></li>');
             } else {
               list.append(item);
-  
+
               item.append('<img style="float: left; margin: 0px 15px 15px 0px;" src="' + user.avatar_url + '" alt="" height="42" width="42">');
               item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
-              if ((null != user.company) || (null != user.blog)) {
-                item.append(' (');
-                if (null != user.company) {
-                  item.append(user.company);
-                }
-                if (null != user.blog) {
-                  item.append(', <a href="' + user.blog + '">blog</a>');
-                }
-                item.append(')');
+              if (null != user.company) {
+                item.append(' (' + user.company + ')');
               }
-              item.append(' - <a href="' + repo.html_url + '">' + repo.name + '</a>');
+              if (null != user.blog) {
+                item.append(' - <a href="' + user.blog + '">blog</a>');
+              }
+              var sublist = $('<ul id="' + user.name + '" class="collaborator" />');
+              item.append(sublist);
+              sublist.append('<li id="' + user.name + '" class="collaborator repo"><a href="' + repo.html_url + '">' + repo.name + '</a> [' + contributor.contributions + ']</li>');
             }
           });
         });
