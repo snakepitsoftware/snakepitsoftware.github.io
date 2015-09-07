@@ -99,6 +99,20 @@ dd {
   margin: 0; padding: 0 0 0.5em 25px;
 }
 
+ul.repos, ul.repo_properties {
+  margin: 0;
+  padding: 0 0 5px 0;
+  list-style-type: none;
+}
+ul.repo_properties {
+  list-style-type: disc;
+  padding: 0 0 5px 35px;
+  font-size: 80%
+}
+li.repo, li.repository, li.wiki, li.tracker, li.documentation, li.download {
+  padding: 0 0 5px 0;
+}
+
 th {
   color:#444;
 }
