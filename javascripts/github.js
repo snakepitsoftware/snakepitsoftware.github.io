@@ -87,7 +87,7 @@ jQuery.fn.loadRepositories = function(user, type, filter) {
 
   $.githubRepos(user, type, function(data) {
     var repos = data;
-    var list = $('<ul class="repos" />');
+    var list = $('<ul id="' + user + '" class="repos" />');
 
     target.empty().append(list);
 
@@ -98,7 +98,7 @@ jQuery.fn.loadRepositories = function(user, type, filter) {
 
       list.append(item);
 
-      item.append('<b>' + repo.name + '</b> - ' + repo.description);
+      item.append('<span id="' + repo.name + '" class="repo_name">' + repo.name + '</span> - <span id="' + repo.name + '" class="repo_description">' + repo.description + '</span>');
       item.append(sublist);
 
       sublist.append('<li id="' + repo.name + '" class="repository"><a href="' + repo.html_url +'">Repository</a></li>');
@@ -128,7 +128,7 @@ jQuery.fn.loadMembers = function(organization) {
 
   $.githubMembers(organization, function(data) {
     var members = data;
-    var list = $('<ul class="members" />');
+    var list = $('<ul id="' + organization + '" class="members" />');
 
     target.empty().append(list);
 
@@ -137,11 +137,11 @@ jQuery.fn.loadMembers = function(organization) {
 
       $.githubUser(member.login, function(data) {
         var user = data;
-        var item = $('<li style="clear:both" id="' + user.name + '" class="member" />');
+        var item = $('<li id="' + user.name + '" class="member" />');
 
         list.append(item);
 
-        item.append('<img style="float: left; margin: 0px 15px 15px 0px;" src="' + user.avatar_url + '" alt="" height="42" width="42">');
+        item.append('<img id="' + user.name + '" class="member" src="' + user.avatar_url + '" alt="" height="42" width="42">');
         item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
         if (null != user.company) {
           item.append(' (' + user.company + ')');
@@ -157,11 +157,11 @@ jQuery.fn.loadMembers = function(organization) {
 jQuery.fn.loadContributors = function(user, type) {
   var target = this;
 
-  target.html("<span>Querying GitHub for contributors ...</span>");
+  target.html("<span>Querying GitHub for " + user +"'s contributors ...</span>");
 
   $.githubRepos(user, type, function(data) {
     var repos = data;
-    var list = $('<ul class="contributors" />');
+    var list = $('<ul id="' + user + '" class="contributors" />');
 
     target.empty().append(list);
 
@@ -176,14 +176,15 @@ jQuery.fn.loadContributors = function(user, type) {
 
           $.githubUser(contributor.login, function(data) {
             var user = data;
-            var item = $('<li style="clear:both" id="' + user.name + '" class="contributor" />');
 
             if ($('ul#' + user.name + '.repos').length > 0) {
-              $('ul#' + user.name + '.repos').append('<li class="repo"><a href="' + repo.html_url + '">' + repo.name + '</a> [' + contributor.contributions + ']</li>');
+              $('ul#' + user.name + '.repos').append('<li id="' + user.name + '" class="repo"><a href="' + repo.html_url + '">' + repo.name + '</a> [' + contributor.contributions + ']</li>');
             } else {
+              var item = $('<li id="' + user.name + '" class="contributor" />');
+
               list.append(item);
 
-              item.append('<img style="float: left; margin: 0px 15px 15px 0px;" src="' + user.avatar_url + '" alt="" height="42" width="42">');
+              item.append('<img id="' + user.name + '" class="contributor" src="' + user.avatar_url + '" alt="" height="42" width="42">');
               item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
               if (null != user.company) {
                 item.append(' (' + user.company + ')');
@@ -205,11 +206,11 @@ jQuery.fn.loadContributors = function(user, type) {
 jQuery.fn.loadCollaborators = function(user, type) {
   var target = this;
 
-  target.html("<span>Querying GitHub for collaborators ...</span>");
+  target.html("<span>Querying GitHub for " + user +"'s collaborators ...</span>");
 
   $.githubRepos(user, type, function(data) {
     var repos = data;
-    var list = $('<ul class="collaborators" />');
+    var list = $('<ul id="' + user + '" class="collaborators" />');
 
     target.empty().append(list);
 
@@ -224,14 +225,14 @@ jQuery.fn.loadCollaborators = function(user, type) {
 
           $.githubUser(collaborator.login, function(data) {
             var user = data;
-            var item = $('<li style="clear:both" id="' + user.name + '" class="collaborator" />');
+            var item = $('<li id="' + user.name + '" class="collaborator" />');
 
             if ($('ul#' + user.name + '.collaborator').length > 0) {
               $('ul#' + user.name + '.collaborator').append('<li class="collaborator"><a href="' + repo.html_url + '">' + repo.name + '</a></li>');
             } else {
               list.append(item);
 
-              item.append('<img style="float: left; margin: 0px 15px 15px 0px;" src="' + user.avatar_url + '" alt="" height="42" width="42">');
+              item.append('<img id="' + user.name + '" class="collaborator" src="' + user.avatar_url + '" alt="" height="42" width="42">');
               item.append('<a href="' + user.html_url + '">' + user.name + '</a>');
               if (null != user.company) {
                 item.append(' (' + user.company + ')');

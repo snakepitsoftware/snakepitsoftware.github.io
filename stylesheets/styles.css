@@ -95,10 +95,17 @@ ul.repos, ul.repo_properties {
 ul.repo_properties {
   list-style-type: disc;
   padding: 0 0 5px 35px;
-  font-size: 80%
+  font-size: 80%;
+  display: inline;
 }
 li.repo, li.repository, li.wiki, li.tracker, li.documentation, li.download {
   padding: 0 0 5px 0;
+}
+li.repository, li.wiki, li.tracker, li.documentation, li.download {
+  display: inline;
+}
+span.repo_name {
+  font-weight: bold;
 }
 /*li#snakepitsoftware\.github\.io.repo {
   display: none;
