@@ -96,13 +96,19 @@ ul.repo_properties {
   list-style-type: disc;
   padding: 0 0 5px 35px;
   font-size: 80%;
-  display: inline;
 }
-li.repo, li.repository, li.wiki, li.tracker, li.documentation, li.download {
+ul.repo_properties li:after {
+  content: ", ";
+}
+ul.repo_properties li:last-child:after {
+  content: "";
+}
+li.repo {
   padding: 0 0 5px 0;
 }
 li.repository, li.wiki, li.tracker, li.documentation, li.download {
   display: inline;
+  padding: 0 5px 0 0;
 }
 span.repo_name {
   font-weight: bold;
