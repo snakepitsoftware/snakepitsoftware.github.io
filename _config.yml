@@ -1,0 +1,8 @@
+title: Snakepit Software
+description: Open Source Projects
+google_analytics: UA-48086869-2
+show_downloads: true
+theme: jekyll-theme-minimal
+
+gems:
+  - jekyll-mentions
