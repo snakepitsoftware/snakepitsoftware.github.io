@@ -1,0 +1,32 @@
+  /* repos */
+  div#repo-wrapper div#repos.github ul.repos,
+  div#repo-wrapper div#repos.github ul.repo_properties {
+    margin: 0;
+    padding: 0 0 5px 0;
+    list-style-type: none;
+  }
+  div#repo-wrapper div#repos.github ul.repo_properties {
+    padding: 0 0 5px 35px;
+    font-size: 80%;
+  }
+  div#repo-wrapper div#repos.github ul.repo_properties li:after {
+    content: ", ";
+  }
+  div#repo-wrapper div#repos.github ul.repo_properties li:last-child:after {
+    content: "";
+  }
+  div#repo-wrapper div#repos.github ul.repos li.repo {
+    padding: 0 0 5px 0;
+  }
+  div#repo-wrapper div#repos.github ul.repo_properties li.repository,
+  div#repo-wrapper div#repos.github ul.repo_properties li.wiki,
+  div#repo-wrapper div#repos.github ul.repo_properties li.tracker,
+  div#repo-wrapper div#repos.github ul.repo_properties li.documentation,
+  div#repo-wrapper div#repos.github ul.repo_properties li.download {
+    display: inline;
+    padding: 0 5px 0 0;
+  }
+  div#repo-wrapper div#repos.github ul.repos li.repo span.repo_name {
+    font-weight: bold;
+  }
+  
