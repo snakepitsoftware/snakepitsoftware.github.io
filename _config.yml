@@ -1,7 +1,7 @@
 title: Snakepit Software
 description: Open Source Projects
 google_analytics: UA-48086869-2
-show_downloads: true
+show_downloads: false
 theme: jekyll-theme-minimal
 
 gems:
